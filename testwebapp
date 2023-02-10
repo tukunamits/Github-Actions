@@ -1,1 +1,45 @@
-test
+web.yml
+
+yaml
+name: Animal Farm NodeJS CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '18.x'
+    - name: Run Yarn 
+      run: yarn
+    - name: Run tests
+      run: yarn test
+      
+    -----------------------
+    
+name: build
+steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 14
+      uses: actions/setup-java@v1
+      with:
+        java-version: 14
+
+    - name: Build project with Maven
+      run: mvn -B package --file pom.xml
+      jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: deploy
+      // deploy stages
